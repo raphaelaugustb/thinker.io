@@ -131,6 +131,7 @@ You don't have to update it all, you can pass one Parameter on the body if you w
 
 
 ## System Design
-![image](https://github.com/raphaelaugustb/thinker.io/assets/66183690/ffb34e1c-a4f5-4ccc-9267-08106fdc6fbc)
+![image](![image](https://github.com/raphaelaugustb/thinker.io/assets/66183690/0b93a800-99ea-4523-a4a5-b38af0a4a1a8)
+
 
 
