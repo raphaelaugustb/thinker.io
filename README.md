@@ -31,6 +31,8 @@ Init app
 ```bash
   mvn spring-boot:run 
 ```
+## Documents and API Guide
+[Documents](https://github.com/raphaelaugustb/thinker.io/blob/main/documents/documentation.md)
 
 
 
