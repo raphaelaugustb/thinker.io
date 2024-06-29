@@ -32,10 +32,24 @@ Init app
   mvn spring-boot:run 
 ```
 
-## System Design
-![image](https://github.com/raphaelaugustb/thinker.io/assets/66183690/ffb34e1c-a4f5-4ccc-9267-08106fdc6fbc)
 
-## Autores
+
+## Techs and licenses
+
+
+
+
+![Spring](https://img.shields.io/badge/Spring-SpringBoot-6DB33F?style=flat-square&logo=Spring&logoColor=white)
+
+![Postgresql](https://img.shields.io/badge/Database-postgresql-4169e1?style=flat-square&logo=postgresql&logoColor=white)
+
+![Java](https://img.shields.io/badge/Language-java-%23ED8B00.svg?style=flat-square&logo=openjdk&logoColor=white)
+
+![Docker](https://img.shields.io/badge/Dependecies-docker-%230db7ed.svg?style=flat-square&logo=docker&logoColor=white)
+
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+
+## Authors
 
 - [@raphaelaugustb](https://github.com/raphaelaugustb/)
 
