@@ -8,7 +8,7 @@
 
 ## Run App api
 
-Clone o projeto
+Clone repo
 
 ```bash
   git clone https://github.com/raphaelaugustb/thinker.io/
