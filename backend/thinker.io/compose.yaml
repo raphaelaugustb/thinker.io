@@ -1,9 +1,12 @@
+
 services:
   postgres:
-    image: 'postgres:latest'
+    image: postgres:latest
     environment:
-      - 'POSTGRES_DB=mydatabase'
-      - 'POSTGRES_PASSWORD=secret'
-      - 'POSTGRES_USER=myuser'
+      - POSTGRES_DB=thinker.io
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=12345
     ports:
+      - '5432:5432'
+    expose:
       - '5432'
