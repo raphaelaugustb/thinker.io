@@ -39,7 +39,7 @@ public class AccountService {
     public void updateAccount(UUID id, AccountRequest accountRequest) {
         if (accountRepository.existsById(id)) {
             Account account = accountRepository.findById(id).get();
-            account.setEmail(accountRequest.getEmaill());
+            account.setEmail(accountRequest.getEmail());
             account.setUsername(accountRequest.getUsername());
             account.setPassword(account.getPassword());
         } else {

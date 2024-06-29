@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import java.util.List;
 import java.util.UUID;
@@ -25,7 +26,7 @@ public class Account {
     private String password;
     @Column(nullable = false)
     private String email;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Idea> ideiaList;
 
 }

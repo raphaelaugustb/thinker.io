@@ -19,11 +19,11 @@ public class AccountController {
         return ResponseEntity.ok(account);
     }
     @DeleteMapping("/accounts/{id}")
-    public void deleteAccount( @RequestParam  UUID id) {
+    public void deleteAccount( @PathVariable  UUID id) {
         accountService.deleteAccountById(id);
     }
     @GetMapping("/accounts/{id}")
-    public ResponseEntity<Account> getAccountById(@RequestParam UUID id) {
+    public ResponseEntity<Account> getAccountById(@PathVariable UUID id) {
         return  ResponseEntity.ok(accountService.getAccountInfoById(id));
     }
     @PutMapping("/accounts/{id}")
