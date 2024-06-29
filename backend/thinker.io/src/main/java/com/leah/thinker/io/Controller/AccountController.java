@@ -13,20 +13,20 @@ import java.util.UUID;
 public class AccountController {
     @Autowired
     AccountService accountService;
-    @PostMapping("/accounts")
+    @PostMapping("/user")
     public ResponseEntity<Account> createAccount(@RequestBody Account account) {
         accountService.createNewAccount(account);
         return ResponseEntity.ok(account);
     }
-    @DeleteMapping("/accounts/{id}")
+    @DeleteMapping("/user/{id}")
     public void deleteAccount( @PathVariable  UUID id) {
         accountService.deleteAccountById(id);
     }
-    @GetMapping("/accounts/{id}")
+    @GetMapping("/user/{id}")
     public ResponseEntity<Account> getAccountById(@PathVariable UUID id) {
         return  ResponseEntity.ok(accountService.getAccountInfoById(id));
     }
-    @PutMapping("/accounts/{id}")
+    @PutMapping("/user/{id}")
     public ResponseEntity<Account> updateAccount(@RequestParam UUID id, @RequestBody AccountRequest accountRequest){
         accountService.updateAccount(id, accountRequest);
         return ResponseEntity.ok(accountService.getAccountInfoById(id));
