@@ -2,4 +2,38 @@
 
 
 
-Your new way to  turn your ideias on something real. Remember that time when you get that ideia that surprise yourself but you don't write them and you forgot? Thinker is there to solve it, now you can write everyone of them in one single button
+## Your new way to turn your ideias on something real. 
+ 
+ Remember that time when you get that ideia that surprise yourself but you don't write them and you forgot? Thinker is there to solve it, now you can write everyone of them in one single button
+
+## Run App api
+
+Clone o projeto
+
+```bash
+  git clone https://github.com/raphaelaugustb/thinker.io/
+```
+
+Go on directory
+
+```bash
+  cd thinker.io
+```
+
+Install Dependencies
+
+```bash
+  mvn clean install package 
+```
+
+Init app
+
+```bash
+  mvn spring-boot:run 
+```
+
+
+## Autores
+
+- [@raphaelaugustb](https://github.com/raphaelaugustb/)
+
