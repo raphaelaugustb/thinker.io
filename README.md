@@ -17,7 +17,7 @@ Clone repo
 Go on directory
 
 ```bash
-  cd thinker.io/backend
+  cd thinker.io/backend/thinker.io
 ```
 
 Install Dependencies
