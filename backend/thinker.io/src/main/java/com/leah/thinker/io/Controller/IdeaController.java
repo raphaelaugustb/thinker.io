@@ -24,6 +24,10 @@ public class IdeaController {
         List<Idea> ideaList = ideaService.listIdeasAccount(id);
         return ResponseEntity.ok(ideaList);
     }
+    @GetMapping("/user/{id}/idea/{tittle}")
+    public ResponseEntity<List<Idea>> getIdeaByTittle(@PathVariable UUID id, @PathVariable String tittle){
+        return ResponseEntity.ok(ideaService.findIdeaByTittle(id, tittle));
+    }
     @PutMapping("/user/{id}/idea/{idIdea}")
     public ResponseEntity<Account> updateIdea(@PathVariable UUID id,@PathVariable Long idIdea,  @RequestBody IdeaRequest ideaRequest){
         ideaService.updateIdeaInfo(id, idIdea, ideaRequest);

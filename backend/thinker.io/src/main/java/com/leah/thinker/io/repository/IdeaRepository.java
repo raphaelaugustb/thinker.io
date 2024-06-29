@@ -9,5 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface IdeaRepository extends JpaRepository<Idea,Long> {
-    List<Idea> findByTitle(String title, UUID idUser);
+    List<Idea> findByTittle(String tittle);
 }

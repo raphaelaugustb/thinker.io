@@ -21,8 +21,8 @@ public class IdeaService {
     @Autowired
     IdeaRepository ideaRepository;
 
-    public void createNewIdea(UUID id, IdeaRequest ideaRequest) {
-        Account account = accountService.getAccountInfoById(id);
+    public void createNewIdea(UUID idUser,IdeaRequest ideaRequest) {
+        Account account = accountService.getAccountInfoById(idUser);
         if (account == null) {
             throw new RuntimeException("Conta não encontrada");
         } else {
@@ -34,8 +34,8 @@ public class IdeaService {
             accountRepository.save(account);
         }
     }
-    public void removeIdea(UUID id, Long idIdea){
-        Account account = accountService.getAccountInfoById(id);
+    public void removeIdea(UUID idUser, Long idIdea){
+        Account account = accountService.getAccountInfoById(idUser);
         Idea ideaDelete = ideaRepository.getById(idIdea);
         if ( account == null){
             throw new RuntimeException("Conta não encontrada");
@@ -45,8 +45,19 @@ public class IdeaService {
             accountRepository.save(account);
         }
     }
-    public List<Idea> listIdeasAccount(UUID id){
-        Account account = accountService.getAccountInfoById(id);
+    public List<Idea> findIdeaByTittle(UUID idUser, String tittle){
+        List<Idea> ideaByTittle =  ideaRepository.findByTittle(tittle);
+        Account account = accountService.getAccountInfoById(idUser);
+        List<Idea> ideaConfirmation = null;
+        for (Idea idea : ideaByTittle){
+            if (account.getIdeiaList().contains(idea)){
+                ideaConfirmation = ideaByTittle;
+            }
+        }
+        return ideaConfirmation;
+    }
+    public List<Idea> listIdeasAccount(UUID idUser){
+        Account account = accountService.getAccountInfoById(idUser);
         return account.getIdeiaList();
     }
     public void updateIdeaInfo(UUID id,Long idIdea,  IdeaRequest ideaRequest) {
