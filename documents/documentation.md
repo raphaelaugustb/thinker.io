@@ -4,7 +4,7 @@
 
 #### Create new account
 
-```http
+```
   POST /user/
 ```
 
@@ -22,7 +22,7 @@
 
 #### Delete user by ID
 
-```http
+```
   DELETE /user/{id}
 ```
 
@@ -32,7 +32,7 @@
 
 #### Update user by ID
 
-```http
+```
   PUT /user/{id}
 ```
 
@@ -42,7 +42,7 @@
 
 #### Get user by ID
 
-```http
+```
   GET /user/{id}
 ```
 
@@ -54,7 +54,7 @@
 
 #### Create idea passing one user
 
-```http
+```
   POST /user/{id}/idea
 ```
 
@@ -72,7 +72,7 @@
 
 #### Delete idea passing one user
 
-```http
+```
   DELETE /user/{id}/idea/{idIdea}
 ```
 
@@ -87,7 +87,7 @@
 #### Update idea passing one user
 You don't have to update it all, you can pass one Parameter on the body if you want too
 
-```http
+```
   PUT /user/{id}/idea/{idIdea}
 ```
 
@@ -113,7 +113,7 @@ You don't have to update it all, you can pass one Parameter on the body if you w
 
 #### Get idea by tittle passing one user
 
-```http
+```
   GET /user/{id}/idea/{tittle}
 ```
 
