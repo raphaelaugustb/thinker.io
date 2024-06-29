@@ -32,7 +32,7 @@ Init app
   mvn spring-boot:run 
 ```
 
-##System Design
+## System Design
 ![image](https://github.com/raphaelaugustb/thinker.io/assets/66183690/ffb34e1c-a4f5-4ccc-9267-08106fdc6fbc)
 
 ## Autores
