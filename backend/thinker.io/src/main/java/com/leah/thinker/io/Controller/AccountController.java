@@ -1,6 +1,6 @@
 package com.leah.thinker.io.Controller;
 
-import com.leah.thinker.io.Request.AccountRequest;
+import com.leah.thinker.io.dto.request.AccountRequest;
 import com.leah.thinker.io.Service.AccountService;
 import com.leah.thinker.io.entity.Account;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class AccountController {
         return  ResponseEntity.ok(accountService.getAccountInfoById(id));
     }
     @PutMapping("/user/{id}")
-    public ResponseEntity<Account> updateAccount(@RequestParam UUID id, @RequestBody AccountRequest accountRequest){
+    public ResponseEntity<Account> updateAccount(@PathVariable UUID id, @RequestBody AccountRequest accountRequest){
         accountService.updateAccount(id, accountRequest);
         return ResponseEntity.ok(accountService.getAccountInfoById(id));
     }
