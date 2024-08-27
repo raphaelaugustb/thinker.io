@@ -1,11 +1,10 @@
 package com.leah.thinker.io.Service;
 
-import com.leah.thinker.io.Request.IdeaRequest;
+import com.leah.thinker.io.dto.request.IdeaRequest;
 import com.leah.thinker.io.entity.Account;
 import com.leah.thinker.io.entity.Idea;
 import com.leah.thinker.io.repository.AccountRepository;
 import com.leah.thinker.io.repository.IdeaRepository;
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

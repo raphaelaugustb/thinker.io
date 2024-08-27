@@ -1,14 +1,11 @@
 package com.leah.thinker.io.Service;
 
-import com.leah.thinker.io.Request.AccountRequest;
+import com.leah.thinker.io.dto.request.AccountRequest;
 import com.leah.thinker.io.entity.Account;
 import com.leah.thinker.io.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.management.openmbean.InvalidOpenTypeException;
-import java.io.InvalidObjectException;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service

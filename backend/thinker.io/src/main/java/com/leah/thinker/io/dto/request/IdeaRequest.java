@@ -1,11 +1,10 @@
-package com.leah.thinker.io.Request;
+package com.leah.thinker.io.dto.request;
 
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Getter
 @Setter

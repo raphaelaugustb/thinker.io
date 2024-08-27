@@ -1,4 +1,4 @@
-package com.leah.thinker.io.Request;
+package com.leah.thinker.io.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
