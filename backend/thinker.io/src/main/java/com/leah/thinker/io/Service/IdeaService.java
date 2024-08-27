@@ -64,6 +64,11 @@ public class IdeaService {
     public List<Idea> listIdeasAccount(UUID idUser) {
         return accountService.getAccountInfoById(idUser).getIdeiaList();
     }
+    public void updateIdeaStatus(UUID idUser, Long idIdea){
+        Idea idea = ideaRepository.findById(idIdea).orElseThrow(() -> new IdeaNotFound("Idea not found on user documents"));
+                idea.setFinished(true);
+        ideaRepository.save(idea);
+    }
 
     public void updateIdeaInfo(UUID id, Long idIdea, IdeaRequest ideaRequest) {
         Account account = accountService.getAccountInfoById(id);
