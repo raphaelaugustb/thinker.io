@@ -24,8 +24,9 @@ public class AccountController {
         return ResponseEntity.status(HttpStatus.CREATED).body(accountRequest);
     }
     @DeleteMapping("/user/{id}")
-    public void deleteAccount( @PathVariable  UUID id) {
+    public ResponseEntity<Void> deleteAccount( @PathVariable  UUID id) {
         accountService.deleteAccountById(id);
+        return ResponseEntity.ok().build();
     }
     @GetMapping("/user/{id}")
     public ResponseEntity<Account> getAccountById(@PathVariable UUID id) {
