@@ -11,7 +11,10 @@ import java.util.UUID;
 
 @RestController
 public class AccountController {
-    @Autowired
+    public AccountController(AccountService accountService) {
+        this.accountService = accountService;
+    }
+
     AccountService accountService;
     @PostMapping("/user")
     public ResponseEntity<Account> createAccount(@RequestBody Account account) {
