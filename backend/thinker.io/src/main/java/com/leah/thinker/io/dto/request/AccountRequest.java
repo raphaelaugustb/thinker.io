@@ -5,12 +5,5 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
-public class AccountRequest {
-    private String email;
-    private String username;
-    private String password;
+public record AccountRequest(String email, String username, String password) {
 }
