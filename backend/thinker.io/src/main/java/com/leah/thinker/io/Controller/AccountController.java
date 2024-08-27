@@ -4,6 +4,8 @@ import com.leah.thinker.io.dto.request.AccountRequest;
 import com.leah.thinker.io.Service.AccountService;
 import com.leah.thinker.io.entity.Account;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,9 +19,9 @@ public class AccountController {
 
     AccountService accountService;
     @PostMapping("/user")
-    public ResponseEntity<Account> createAccount(@RequestBody Account account) {
-        accountService.createNewAccount(account);
-        return ResponseEntity.ok(account);
+    public ResponseEntity<AccountRequest> createAccount(@RequestBody AccountRequest accountRequest) {
+        accountService.createNewAccount(accountRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(accountRequest);
     }
     @DeleteMapping("/user/{id}")
     public void deleteAccount( @PathVariable  UUID id) {
@@ -27,11 +29,11 @@ public class AccountController {
     }
     @GetMapping("/user/{id}")
     public ResponseEntity<Account> getAccountById(@PathVariable UUID id) {
-        return  ResponseEntity.ok(accountService.getAccountInfoById(id));
+        return  ResponseEntity.status(HttpStatus.FOUND).body(accountService.getAccountInfoById(id));
     }
     @PutMapping("/user/{id}")
     public ResponseEntity<Account> updateAccount(@PathVariable UUID id, @RequestBody AccountRequest accountRequest){
         accountService.updateAccount(id, accountRequest);
-        return ResponseEntity.ok(accountService.getAccountInfoById(id));
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(accountService.getAccountInfoById(id));
     }
 }
