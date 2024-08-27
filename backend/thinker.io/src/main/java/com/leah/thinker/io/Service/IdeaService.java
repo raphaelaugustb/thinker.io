@@ -3,9 +3,10 @@ package com.leah.thinker.io.Service;
 import com.leah.thinker.io.dto.request.IdeaRequest;
 import com.leah.thinker.io.entity.Account;
 import com.leah.thinker.io.entity.Idea;
+import com.leah.thinker.io.exception.IdeaNotFound;
+import com.leah.thinker.io.exception.InvalidRequestException;
 import com.leah.thinker.io.repository.AccountRepository;
 import com.leah.thinker.io.repository.IdeaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,62 +14,66 @@ import java.util.UUID;
 
 @Service
 public class IdeaService {
-    @Autowired
+
     AccountService accountService;
-    @Autowired
+
     AccountRepository accountRepository;
-    @Autowired
+
+    public IdeaService(AccountService accountService, AccountRepository accountRepository, IdeaRepository ideaRepository) {
+        this.accountService = accountService;
+        this.accountRepository = accountRepository;
+        this.ideaRepository = ideaRepository;
+    }
+
     IdeaRepository ideaRepository;
 
-    public void createNewIdea(UUID idUser,IdeaRequest ideaRequest) {
+    public void createNewIdea(UUID idUser, IdeaRequest ideaRequest) {
         Account account = accountService.getAccountInfoById(idUser);
-        if (account == null) {
-            throw new RuntimeException("Conta não encontrada");
-        } else {
-            Idea idea = new Idea();
-            idea.setTittle(ideaRequest.getTittle());
-            idea.setDescription(ideaRequest.getDescription());
-            account.getIdeiaList().add(idea);
-            ideaRepository.save(idea);
-            accountRepository.save(account);
-        }
+        Idea idea = new Idea();
+        if (ideaRequest.tittle() == null || ideaRequest.description() == null)
+            throw new InvalidRequestException("Fields cannot be null");
+        idea.setTittle(ideaRequest.tittle());
+        idea.setDescription(ideaRequest.description());
+        account.getIdeiaList().add(idea);
+        ideaRepository.save(idea);
+        accountRepository.save(account);
+
     }
-    public void removeIdea(UUID idUser, Long idIdea){
+
+    public void removeIdea(UUID idUser, Long idIdea) {
         Account account = accountService.getAccountInfoById(idUser);
-        Idea ideaDelete = ideaRepository.getById(idIdea);
-        if ( account == null){
-            throw new RuntimeException("Conta não encontrada");
-        } else {
-            account.getIdeiaList().remove(ideaDelete);
-            ideaRepository.delete(ideaDelete);
-            accountRepository.save(account);
-        }
+        Idea ideaDelete = ideaRepository.findById(idIdea).orElseThrow(() -> new IdeaNotFound("Idea not found on user documents"));
+        account.getIdeiaList().remove(ideaDelete);
+        ideaRepository.delete(ideaDelete);
+        accountRepository.save(account);
     }
-    public List<Idea> findIdeaByTittle(UUID idUser, String tittle){
-        List<Idea> ideaByTittle =  ideaRepository.findByTittle(tittle);
+
+    public List<Idea> findIdeaByTittle(UUID idUser, String tittle) {
         Account account = accountService.getAccountInfoById(idUser);
-        List<Idea> ideaConfirmation = null;
-        for (Idea idea : ideaByTittle){
-            if (account.getIdeiaList().contains(idea)){
-                ideaConfirmation = ideaByTittle;
+        List<Idea> ideaList = null;
+        for (Idea idea : account.getIdeiaList()) {
+            if (idea.getTittle().equals(tittle)) {
+                ideaList.add(idea);
             }
         }
-        return ideaConfirmation;
+        if (ideaList.isEmpty())
+            throw new IdeaNotFound("nome matches with title on user documents");
+        return ideaList;
     }
-    public List<Idea> listIdeasAccount(UUID idUser){
-        Account account = accountService.getAccountInfoById(idUser);
-        return account.getIdeiaList();
+
+    public List<Idea> listIdeasAccount(UUID idUser) {
+        return accountService.getAccountInfoById(idUser).getIdeiaList();
     }
-    public void updateIdeaInfo(UUID id,Long idIdea,  IdeaRequest ideaRequest) {
+
+    public void updateIdeaInfo(UUID id, Long idIdea, IdeaRequest ideaRequest) {
         Account account = accountService.getAccountInfoById(id);
-        Idea ideaUpdate = ideaRepository.findById(idIdea).get();
-        if (account == null) {
-            throw new RuntimeException("Conta não encontrada");
-        } else {
-            ideaUpdate.setTittle(ideaRequest.getTittle());
-            ideaUpdate.setDescription(ideaRequest.getDescription());
-            ideaUpdate.setFinished(ideaRequest.isFinished());
-            ideaRepository.save(ideaUpdate);
-        }
+        Idea ideaUpdate = ideaRepository.findById(idIdea).orElseThrow(() -> new IdeaNotFound("Idea not found on user documents"));
+        if (ideaRequest.tittle() == null || ideaRequest.description() == null)
+            throw new InvalidRequestException("Fields cannot be null");
+        ideaUpdate.setTittle(ideaRequest.tittle());
+        ideaUpdate.setDescription(ideaRequest.description());
+        ideaUpdate.setFinished(ideaRequest.isFinished());
+        ideaRepository.save(ideaUpdate);
+
     }
 }

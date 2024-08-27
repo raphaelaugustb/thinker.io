@@ -2,46 +2,51 @@ package com.leah.thinker.io.Service;
 
 import com.leah.thinker.io.dto.request.AccountRequest;
 import com.leah.thinker.io.entity.Account;
+import com.leah.thinker.io.exception.InvalidRequestException;
+import com.leah.thinker.io.exception.UserNotFoundException;
 import com.leah.thinker.io.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.module.InvalidModuleDescriptorException;
 import java.util.UUID;
 
 @Service
 public class AccountService {
-    @Autowired
     AccountRepository accountRepository;
-    public void createNewAccount(Account account) {
-        if (account == null){
-            throw  new NullPointerException("Conta inválida");
-        } else {
-            accountRepository.save(account);
-        }
+
+    public AccountService(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
     }
+
+    public void createNewAccount(AccountRequest accountRequest) {
+        if (accountRequest.email() == null || accountRequest.password() == null || accountRequest.username() == null)
+            throw new InvalidRequestException("Missing fields");
+        Account account = new Account();
+        account.setUsername(accountRequest.username());
+        account.setPassword(accountRequest.password());
+        account.setEmail(accountRequest.email());
+        accountRepository.save(account);
+    }
+
     public Account getAccountInfoById(UUID id) {
-        if (accountRepository.existsById(id)) {
-            return accountRepository.findById(id).get();
-        } else {
-            throw new RuntimeException("Usuário não cadastrado");
-        }
+        return accountRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
     }
+
     public void deleteAccountById(UUID id) {
-        if (accountRepository.existsById(id)) {
-            accountRepository.deleteById(id);
-        } else {
-            throw new RuntimeException("Conta não encontrada");
-        }
+        accountRepository.deleteById(
+                accountRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found")).getId()
+        );
     }
+
     public void updateAccount(UUID id, AccountRequest accountRequest) {
-        if (accountRepository.existsById(id)) {
-            Account account = accountRepository.findById(id).get();
-            account.setEmail(accountRequest.getEmail());
-            account.setUsername(accountRequest.getUsername());
-            account.setPassword(account.getPassword());
-        } else {
-            throw new RuntimeException("Conta não encontrada");
-        }
+        Account account = accountRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
+        if (accountRequest.email() == null || accountRequest.password() == null || accountRequest.username() == null)
+            throw new InvalidRequestException("Missing fields");
+        account.setEmail(accountRequest.email());
+        account.setUsername(accountRequest.username());
+        account.setPassword(account.getPassword());
+        accountRepository.save(account);
 
     }
 }
