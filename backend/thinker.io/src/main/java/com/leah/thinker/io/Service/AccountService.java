@@ -47,6 +47,5 @@ public class AccountService {
         account.setUsername(accountRequest.username());
         account.setPassword(account.getPassword());
         accountRepository.save(account);
-
     }
 }

@@ -3,7 +3,7 @@ package com.leah.thinker.io.Service;
 import com.leah.thinker.io.dto.request.IdeaRequest;
 import com.leah.thinker.io.entity.Account;
 import com.leah.thinker.io.entity.Idea;
-import com.leah.thinker.io.exception.IdeaNotFound;
+import com.leah.thinker.io.exception.IdeaNotFoundException;
 import com.leah.thinker.io.exception.InvalidRequestException;
 import com.leah.thinker.io.repository.AccountRepository;
 import com.leah.thinker.io.repository.IdeaRepository;
@@ -32,6 +32,9 @@ public class IdeaService {
         Idea idea = new Idea();
         if (ideaRequest.tittle() == null || ideaRequest.description() == null)
             throw new InvalidRequestException("Fields cannot be null");
+        if (!ideaRequest.isFinished()) {
+            idea.setFinished(true);
+        }
         idea.setTittle(ideaRequest.tittle());
         idea.setDescription(ideaRequest.description());
         account.getIdeiaList().add(idea);
@@ -42,7 +45,7 @@ public class IdeaService {
 
     public void removeIdea(UUID idUser, Long idIdea) {
         Account account = accountService.getAccountInfoById(idUser);
-        Idea ideaDelete = ideaRepository.findById(idIdea).orElseThrow(() -> new IdeaNotFound("Idea not found on user documents"));
+        Idea ideaDelete = ideaRepository.findById(idIdea).orElseThrow(() -> new IdeaNotFoundException("Idea not found on user documents"));
         account.getIdeiaList().remove(ideaDelete);
         ideaRepository.delete(ideaDelete);
         accountRepository.save(account);
@@ -57,22 +60,22 @@ public class IdeaService {
             }
         }
         if (ideaList.isEmpty())
-            throw new IdeaNotFound("nome matches with title on user documents");
+            throw new IdeaNotFoundException("nome matches with title on user documents");
         return ideaList;
     }
 
     public List<Idea> listIdeasAccount(UUID idUser) {
         return accountService.getAccountInfoById(idUser).getIdeiaList();
     }
-    public void updateIdeaStatus(UUID idUser, Long idIdea){
-        Idea idea = ideaRepository.findById(idIdea).orElseThrow(() -> new IdeaNotFound("Idea not found on user documents"));
-                idea.setFinished(true);
+
+    public void updateIdeaStatus(UUID idUser, Long idIdea) {
+        Idea idea = ideaRepository.findById(idIdea).orElseThrow(() -> new IdeaNotFoundException("Idea not found on user documents"));
+        idea.setFinished(true);
         ideaRepository.save(idea);
     }
 
     public void updateIdeaInfo(UUID id, Long idIdea, IdeaRequest ideaRequest) {
-        Account account = accountService.getAccountInfoById(id);
-        Idea ideaUpdate = ideaRepository.findById(idIdea).orElseThrow(() -> new IdeaNotFound("Idea not found on user documents"));
+        Idea ideaUpdate = ideaRepository.findById(idIdea).orElseThrow(() -> new IdeaNotFoundException("Idea not found on user documents"));
         if (ideaRequest.tittle() == null || ideaRequest.description() == null)
             throw new InvalidRequestException("Fields cannot be null");
         ideaUpdate.setTittle(ideaRequest.tittle());
